@@ -16,6 +16,18 @@ mainNav?.querySelectorAll("a").forEach((link) => {
   });
 });
 
+const certificateToggle = document.querySelector("#certificate-toggle");
+const additionalCertificates = document.querySelector("#certificate-more");
+
+certificateToggle?.addEventListener("click", () => {
+  const isExpanded = certificateToggle.getAttribute("aria-expanded") === "true";
+  certificateToggle.setAttribute("aria-expanded", String(!isExpanded));
+  additionalCertificates.classList.toggle("is-expanded", !isExpanded);
+  certificateToggle.innerHTML = isExpanded
+    ? 'Ver mais 3 certificados <span aria-hidden="true">＋</span>'
+    : 'Mostrar menos <span aria-hidden="true">−</span>';
+});
+
 document.querySelectorAll("[data-service]").forEach((link) => {
   link.addEventListener("click", () => {
     const serviceField = document.querySelector("#service");
@@ -48,14 +60,14 @@ projectForm?.addEventListener("submit", (event) => {
   const service = String(formData.get("service") ?? "").trim();
   const details = String(formData.get("message") ?? "").trim();
   if (!name) {
-    formStatus.textContent = "Informe seu nome ou o nome da empresa para continuar.";
+    formStatus.textContent = "Informe o nome da loja ou empresa para continuar.";
     formStatus.classList.add("form-status-error");
     projectForm.querySelector("#name").focus();
     return;
   }
 
   const message =
-    `Olá! Meu nome é ${name} e tenho interesse em: ${service}. ` +
+    `Olá! Minha loja ou empresa é ${name} e tenho interesse em: ${service}. ` +
     `Detalhes rápidos: ${details || "Não informado"}.`;
   const whatsappUrl =
     `https://wa.me/${config.whatsappNumber}?text=${encodeURIComponent(message)}`;

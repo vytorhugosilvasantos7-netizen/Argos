@@ -11,7 +11,7 @@ Este diretório contém a configuração local, as migrações do banco e as Edg
 - `functions/project-request/`: função que recebe pedidos, aplica o limite de requisições e encaminha os dados por e-mail.
 - `.env.example`: nomes das variáveis para desenvolvimento local, sem credenciais.
 
-O painel administrativo está em `../app-argus`. As migrações criam as tabelas de clientes e lançamentos financeiros, com RLS para que cada usuário autenticado acesse somente os próprios registros, e habilitam links privados individuais para os portais de cliente. O portal anônimo acessa somente os campos públicos do projeto associado ao token, nunca os dados financeiros. Consulte `../app-argus/README.md` para configurar o acesso.
+O painel administrativo está em `../app-argus`. As migrações criam as tabelas de clientes e lançamentos financeiros e habilitam links privados individuais para os portais de cliente. Após a migration `20261113000000_admin_management.sql`, somente os usuários explicitamente cadastrados em `argos_admins` acessam os dados administrativos compartilhados; cadastre os administradores conforme `../app-argus/README.md` ou eles não poderão acessar os registros. O portal anônimo acessa somente os campos públicos do projeto associado ao token, nunca os dados financeiros.
 
 ## Desenvolvimento local
 

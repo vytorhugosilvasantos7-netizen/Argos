@@ -195,7 +195,8 @@ function renderProject(data) {
   const status = document.querySelector("#project-status");
   const isComplete = data.status === "completed";
   status.classList.toggle("is-complete", isComplete);
-  document.querySelector("#project-status-label").textContent = isComplete ? "Concluído" : "Em desenvolvimento";
+  const statusLabels = { pending: "Aguardando início", in_progress: "Em desenvolvimento", finishing: "Finalização", completed: "Concluído" };
+  document.querySelector("#project-status-label").textContent = statusLabels[data.status] ?? data.status;
 
   const progress = Math.max(0, Math.min(100, Number(data.progress) || 0));
   const progressBar = document.querySelector(".progress-track");
