@@ -16,6 +16,43 @@ mainNav?.querySelectorAll("a").forEach((link) => {
   });
 });
 
+const revealTargets = document.querySelectorAll("main > section, .site-footer");
+if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+  const revealVisibleTargets = () => {
+    let hasPendingTargets = false;
+    const revealThreshold = window.innerHeight * 0.88;
+    const visibleTargets = [];
+
+    revealTargets.forEach((target) => {
+      if (target.classList.contains("is-visible")) {
+        return;
+      }
+
+      if (target.getBoundingClientRect().top < revealThreshold) {
+        visibleTargets.push(target);
+      } else {
+        hasPendingTargets = true;
+      }
+    });
+
+    visibleTargets.forEach((target) => target.classList.add("is-visible"));
+    if (!hasPendingTargets) {
+      window.removeEventListener("scroll", revealVisibleTargets);
+      window.removeEventListener("resize", revealVisibleTargets);
+    }
+  };
+
+  const revealThreshold = window.innerHeight * 0.88;
+  revealTargets.forEach((target) => {
+    target.classList.add("scroll-reveal");
+    if (target.getBoundingClientRect().top < revealThreshold) {
+      target.classList.add("is-visible");
+    }
+  });
+  window.addEventListener("scroll", revealVisibleTargets, { passive: true });
+  window.addEventListener("resize", revealVisibleTargets);
+}
+
 const certificateToggle = document.querySelector("#certificate-toggle");
 const additionalCertificates = document.querySelector("#certificate-more");
 
